@@ -9,7 +9,7 @@ class HorcruxReverseManager():
             self.files.append(HorcruxFileReader(file))
 
         if len(set(file.hashval for file in self.files)) > 1:
-            raise ValueError("Horcruxes do not belong to same source file.")
+            raise ValueError("Horcruxes belong to different files.")
         
         if len(set(file.nonce for file in self.files)) > 1:
             raise ValueError("Horcruxes do not have same nonce.")

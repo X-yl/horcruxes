@@ -54,7 +54,7 @@ class HorcruxFileReader():
     def __init__(self, filename):
         self.file = open(filename, 'rb')
         name = self.file.read(4)
-        if name != b"HXL1": raise ValueError("File is not a horcrux")
+        if name != b"HXL1": raise ValueError(f"File {filename} is not a horcrux")
         self.hashval = int.from_bytes(self.file.read(16), byteorder="big")
 
         def read_int():
