@@ -1,27 +1,31 @@
-from cruxwriter import HorcruxFile
+from cruxio import HorcruxFileWriter
 from Crypto.Cipher import AES
 
 class HorcruxCreateManager():
 
-    def __init__(self, source, n, k, blocksize,secret, shares, outdir):
-        self.srcfilename = source
+    def __init__(self, source, n, k, blocksize, outdir):
+        import os
+        import secrets
+        import shamir
+        from math import ceil
+        self.blocksize = blocksize or os.stat(source).st_size//10
+        self.numblocks = ceil(os.stat(source).st_size/self.blocksize)
         self.source = open(source, 'rb')
         self.n = n
         self.k = k
-        self.blocksize = blocksize
-        self.shares = shares
-        self.secret = secret
+        self.secret = secrets.randbelow(shamir.MAX_PRIME)
+        self.shares = shamir.generate_shares(self.secret, n, k)
         self.files = []
-        self.aes = AES.new(secret.to_bytes(16, byteorder='big'), mode=AES.MODE_CTR)
+        self.aes = AES.new(self.secret.to_bytes(16, byteorder='big'), mode=AES.MODE_CTR)
         self.nonce = self.aes.nonce
         for i in range(n):
-           self.files.append(HorcruxFile(outdir + f"{source}_horcrux_{i+1}_of_{n}", 'wb'))
+           self.files.append(HorcruxFileWriter(os.path.join(outdir, f"{source}_{i+1}_of_{n}.hcx")))
 
     def write_headers(self):
         file: HorcruxFile = None
         srchash = self.hash_source()
         for i,file in enumerate(self.files):
-            file.write_headers(srchash, self.nonce, self.n, self.k, i, self.blocksize, self.shares[i])
+            file.write_headers(srchash, self.nonce, self.n, self.k, i, self.blocksize, self.numblocks, self.shares[i])
         
 
     def hash_source(self):
@@ -35,26 +39,16 @@ class HorcruxCreateManager():
         return val
 
     def write_block(self, bno):
-        fileno = bno * (self.n-self.k+1) % len(self.files)
+        fileno = bno * (self.n-self.k+1) % self.n
         block = self.source.read(self.blocksize)
 
         encrypted = self.aes.encrypt(block)
-
         for _ in range(self.n-self.k+1):
             self.files[fileno].write_block(encrypted)
             fileno += 1
-            fileno %= len(self.files)
+            fileno %= self.n
 
     def write(self):
-        import os
-        from math import ceil
-        srcblocks = ceil(os.stat(self.srcfilename).st_size/self.blocksize)
-
-        for i in range(srcblocks):
+        from tqdm import tqdm
+        for i in tqdm(range(self.numblocks), desc="Encrypting"):
             self.write_block(i)
-
-import shamir
-shares = shamir.generate_shares(1337, 5, 3)
-x = HorcruxCreateManager("horcrux.txt", 5, 3, 651, 1337, shares, "./output/")
-x.write_headers()
-x.write()
