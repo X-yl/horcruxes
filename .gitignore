@@ -3,3 +3,6 @@ horcrux.txt
 __pycache__ 
 output 
 venv 
+dist/ 
+horcruxes.egg-info/ 
+build/ 

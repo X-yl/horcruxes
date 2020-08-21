@@ -10,6 +10,13 @@ setup(name='horcruxes',
         "console_scripts": [
             "horcruxes = horcruxes.crux:cli",
         ]
-    },
+      },
+      install_requires=[
+            "click>=7.1.2",
+            "mmh3>=2.5.1",
+            "pycryptodome>=3.9.8",
+            "tqdm>=4.48.2",
+      ],
+      requires_python=">=3.8",
       packages=['horcruxes'])
 

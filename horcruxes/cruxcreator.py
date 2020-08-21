@@ -32,7 +32,7 @@ class HorcruxCreateManager():
         """Obtains a murmurhash3 hash of source file"""
         import mmh3
         val = 0
-        while chunk:=self.source.read(1024):
+        while chunk:=self.source.read(self.blocksize):
             val = mmh3.hash128(chunk, val)
         
         self.source.seek(0)
