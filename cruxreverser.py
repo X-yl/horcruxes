@@ -14,8 +14,8 @@ class HorcruxReverseManager():
         if len(set(file.nonce for file in self.files)) > 1:
             raise ValueError("Horcruxes do not have same nonce.")
 
-        if self.files[0].k < len(files):
-            raise ValueError(f"Not enough horcruxes. Required {files[0].k}")
+        if self.files[0].k > len(self.files):
+            raise ValueError(f"Not enough horcruxes. Required {self.files[0].k}, got {len(self.files)}")
 
         self.nonce = self.files[0].nonce
         self.n=self.files[0].n
