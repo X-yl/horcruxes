@@ -17,6 +17,9 @@ def split(file, n: int, k: int, o, block_size):
     import os
     os.makedirs(o, exist_ok=True)
 
+    if n > k: 
+        print("WARN: n > k. Data will be irrecoverable. What a waste of CPU cycles.")
+
     from horcruxes.cruxcreator import HorcruxCreateManager
     hcm = HorcruxCreateManager(file, n, k, block_size, o)
     hcm.write_headers()
