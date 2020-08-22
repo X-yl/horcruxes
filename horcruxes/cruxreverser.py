@@ -1,4 +1,4 @@
-from cruxio import HorcruxFileReader
+from horcruxes.cruxio import HorcruxFileReader
 from Crypto.Cipher import AES
 
 class HorcruxReverseManager():
@@ -27,7 +27,7 @@ class HorcruxReverseManager():
         self.aes = AES.new(self.secret.to_bytes(16, 'big'), AES.MODE_CTR, nonce=self.nonce)
 
     def get_secret(self):
-        import shamir
+        import horcruxes.shamir as shamir
         shares = [file.share for file in self.files]
 
         return shamir.find_secret(shares)

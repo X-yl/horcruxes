@@ -15,10 +15,9 @@ def cli():
 def split(file, n: int, k: int, o, block_size):
     """Splits a file into horcruxes"""
     import os
-    import shamir
     os.makedirs(o, exist_ok=True)
 
-    from cruxcreator import HorcruxCreateManager
+    from horcruxes.cruxcreator import HorcruxCreateManager
     hcm = HorcruxCreateManager(file, n, k, block_size, o)
     hcm.write_headers()
     hcm.write()
@@ -33,7 +32,7 @@ def bind(files_or_dir, o):
     import os
     if os.path.dirname(o): os.makedirs(os.path.dirname(o), exist_ok=True)
 
-    from cruxreverser import HorcruxReverseManager
+    from horcruxes.cruxreverser import HorcruxReverseManager
     files = files_or_dir
     if len(files_or_dir) == 1 and os.path.isdir(files_or_dir[0]):
         files = [os.path.join(files_or_dir[0], file) for file in os.listdir(files_or_dir[0])]

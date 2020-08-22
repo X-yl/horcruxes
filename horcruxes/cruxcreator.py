@@ -1,4 +1,4 @@
-from cruxio import HorcruxFileWriter
+from horcruxes.cruxio import HorcruxFileWriter
 from Crypto.Cipher import AES
 
 class HorcruxCreateManager():
@@ -6,7 +6,7 @@ class HorcruxCreateManager():
     def __init__(self, source, n, k, blocksize, outdir):
         import os
         import secrets
-        import shamir
+        import horcruxes.shamir as shamir
         from math import ceil
         self.blocksize = blocksize or os.stat(source).st_size//10
         self.numblocks = ceil(os.stat(source).st_size/self.blocksize)
