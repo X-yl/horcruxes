@@ -5,11 +5,11 @@
 `horcruxer` is a python package to split a file into `n` encrypted horcruxes, such that any `k` can be used to recreate the original file.
 
 ```
-                    /————> filth.mp4_1_of_5.mp4 
-                   /—————> filth.mp4_2_of_5.mp4 —————\ 
-  filth.mp4   ————<——————> filth.mp4_3_of_5.mp4 ——————>———> filth.mp4
-                   \—————> filth.mp4_4_of_5.mp4 —————/
-                    \————> filth.mp4_5_of_5.mp4 
+                    /————> filth.mp4_1_of_5.hcx 
+                   /—————> filth.mp4_2_of_5.hcx —————\ 
+  filth.mp4   ————<——————> filth.mp4_3_of_5.hcx ——————>———> filth.mp4
+                   \—————> filth.mp4_4_of_5.hcx —————/
+                    \————> filth.mp4_5_of_5.hcx 
                     
                               (n=5, k=3)
 ```
