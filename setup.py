@@ -1,13 +1,13 @@
 from setuptools import setup
 
-
 setup(name='horcruxes',
-      version='3.1415',
-      url='https://github.com/X-yl/horcruxes'
+      version='3.141',
+      url='https://github.com/X-yl/horcruxes',
       description='A command line tool to split a file into horcruxes, where the original can be recreated with at least n of the horcruxes',
       author='X-yl',
-      long_description = open('README.md').read(),
+      long_description= open('README.md').read(),
       license='GNU GPLv3',
+      long_description_content_type='text/markdown',
       entry_points={
         "console_scripts": [
             "horcruxes = horcruxes.crux:cli",
@@ -19,6 +19,5 @@ setup(name='horcruxes',
             "pycryptodome>=3.9.8",
             "tqdm>=4.48.2",
       ],
-      requires_python=">=3.8",
+      python_requires=">=3.8",
       packages=['horcruxes'])
-
