@@ -1,8 +1,8 @@
-# horcruxer
+# horcruxes
 
 [Totally unorignal](https://github.com/jesseduffield/horcrux), but [smaller and faster](#Performance).
 
-`horcruxer` is a python package to split a file into `n` encrypted horcruxes, such that any `k` can be used to recreate the original file.
+`horcruxes` is a python package to split a file into `n` encrypted horcruxes, such that any `k` can be used to recreate the original file.
 
 ```
                     /————> filth.mp4_1_of_5.hcx 

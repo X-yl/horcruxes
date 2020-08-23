@@ -1,7 +1,7 @@
 from setuptools import setup
 
 setup(name='horcruxes',
-      version='3.141',
+      version='2.7',
       url='https://github.com/X-yl/horcruxes',
       description='A command line tool to split a file into horcruxes, where the original can be recreated with at least n of the horcruxes',
       author='X-yl',
