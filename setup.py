@@ -1,11 +1,11 @@
 from setuptools import setup
 
 setup(name='horcruxes',
-      version='2.7',
+      version='2.7.post2',
       url='https://github.com/X-yl/horcruxes',
-      description='A command line tool to split a file into horcruxes, where the original can be recreated with at least n of the horcruxes',
+      description='A command line tool to split a file into horcruxes, so that the original can be recreated with at least k horcruxes',
       author='X-yl',
-      long_description= open('README.md').read(),
+      long_description= open('README.md').read().replace('—', '-'),
       license='GNU GPLv3',
       long_description_content_type='text/markdown',
       entry_points={

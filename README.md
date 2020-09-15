@@ -19,7 +19,18 @@
 ## How's it do that?
 A secret is created and made into several shares using [Shamir's Secret Sharing](https://en.wikipedia.org/wiki/Shamir's_Secret_Sharing). Then, the secret is used to encrypt the content of the input file using AES-256.
 
-Each horcrux file contains a short header and zero or more blocks of encrypted data. This data is distributed in a [RAID 10](https://en.wikipedia.org/wiki/Nested_RAID_levels#RAID_10_(RAID_1+0)) fashion (i.e  a stripe of mirrors), ensuring that any k horcruxes contain enough data to recreate the original, without having to ship n copies of the encrypted data.
+Each horcrux file contains a short header and zero or more blocks of encrypted data. This data is then arranged in a "(k, 1) repetition code of blocks striped over n files".
+As an example, for n=5, k=3, where the file has been divided into seven blocks, the following file structure is created:
+
+| File 1 | File 2 | File 3 | File 4 | File 5 |
+| ------ | ------ | ------ | ------ | ------ |
+| a      | a      | a      | b      | b      |
+| b      | c      | c      | c      | d      |
+| d      | d      | e      | e      | e      |
+| f      | f      | f      | g      | g      |
+| g      | -      | -      | -      | -      |
+
+Any three files together contain at least a single copy of every block without having to create 5 copies of each block.
 
 ## Performance
 This module shows considerably faster and smaller results than [the one I stole the idea from](https://github.com/jesseduffield/horcrux).
